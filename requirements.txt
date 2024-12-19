@@ -1,0 +1,7 @@
+process_spectra
+numpy
+pandas
+matplotlib
+seaborn
+pyarrow
+scipy
