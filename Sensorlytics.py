@@ -351,6 +351,81 @@ def calcular_wl_res_list(dados_amostra):
 
     return wl_res_list
 
+import numpy as np
+
+def calcular_medias(franjas):
+    """
+    Calcula as médias de vetores armazenados em um dicionário aninhado.
+
+    O dicionário de entrada `franjas` deve ter a seguinte estrutura:
+    {
+        dia1: {
+            amostra1: {
+                rodada1: [[valores], [valores], ...],
+                rodada2: [[valores], [valores], ...],
+                ...
+            },
+            amostra2: {...},
+            ...
+        },
+        dia2: {...},
+        ...
+    }
+
+    Retorna um novo dicionário com as médias calculadas para cada rodada.
+
+    Parâmetros:
+        franjas (dict): Dicionário aninhado contendo os dados para cálculo das médias.
+
+    Retorna:
+        dict: Dicionário com as médias calculadas para cada rodada.
+    """
+    medias = {}
+    for dia in franjas:
+        medias[dia] = {}
+        for amostra in franjas[dia]:
+            medias[dia][amostra] = {}
+            for rodada, vetores in franjas[dia][amostra].items():
+                array_vetores = np.array(vetores)
+                medias[dia][amostra][rodada] = np.mean(array_vetores, axis=0)
+    return medias
+
+def plotar_medias_por_rodada(medias, rodada, titulo):
+    """
+    Plota as médias por rodada para cada dia e amostra em um gráfico de múltiplos subplots.
+
+    Parâmetros:
+        medias (dict): Dicionário contendo as médias calculadas por dia e amostra.
+            Estrutura esperada:
+            {
+                dia1: {
+                    amostra1: {rodada1: [valores], rodada2: [valores], ...},
+                    amostra2: {...},
+                    ...
+                },
+                dia2: {...},
+                ...
+            }
+        rodada (str): A chave da rodada a ser plotada.
+        titulo (str): Título do gráfico principal.
+
+    Retorna:
+        None: A função exibe o gráfico mas não retorna valores.
+
+    """
+    fig, axes = plt.subplots(nrows=len(medias), ncols=1, figsize=(5, 15))
+    fig.suptitle(titulo)
+    for i, dia in enumerate(medias):
+        for amostra, media in medias[dia].items():
+            axes[i].plot(media[rodada], label=amostra)
+        axes[i].set_title(dia)
+        axes[i].legend()
+        axes[i].set_xlabel("Índice")
+        axes[i].set_ylabel("Média")
+    plt.tight_layout()
+    plt.show()
+
+
 
 def find_pdf(data):
     """
