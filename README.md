@@ -17,9 +17,26 @@ The library supports saving and loading data in common formats such as JSON and 
 - Find resonant wavelengths using peak detection methods.
 - Histogram and PDF (Probability Density Function) calculations.
 
-## Installation
+## Installation & Setup
 
-To use **Sensorlytics**, you need Python 3.8 or higher. Install the required dependencies:
+To ensure an isolated environment and avoid dependency conflicts, follow the steps below to set up your virtual environment.
+
+### Create the Virtual Environment
 
 ```bash
+python -m venv venv
+```
+### Activate the Virtual Enviroment
+```bash
+venv\Scripts\activate
+```
+
+### Instal Dependencies
+
+To use **Sensorlytics**, you need Python 3.8 or higher!
+With the environment active (you will see the (venv) prefix in your terminal), install the required libraries:
+
+```bash
+pip install --upgrade pip
 pip install process_spectra pandas numpy matplotlib seaborn pyarrow scipy
+```
